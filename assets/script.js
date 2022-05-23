@@ -5,7 +5,7 @@ var fetchButton = document.getElementById('search-btn');
 
 function getApi() {
   // fetch request gets a list of all the repos for the node.js organization
-  var requestUrl = 'https://api.openweathermap.org/data/2.5/onecall?lat=33.44&lon=-94.04&exclude=hourly,daily&appid=' + apiKey;
+  var requestUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + '&limit=1&appid=' + apiKey;
   console.log(requestUrl);
   fetch(requestUrl)
     .then(function (response) {
