@@ -4,7 +4,7 @@ var tableBody = document.getElementById('five-day-forecast');
 var fetchButton = document.getElementById('search-btn');
 
 function getApi() {
-  // fetch request gets a list of all the repos for the node.js organization
+  // fetch request gets coordinates based on city/user input
   var userInput = document.getElementById('location-search').value;
   var requestUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + userInput + '&limit=1&appid=' + apiKey;
   console.log(requestUrl);
@@ -21,6 +21,9 @@ function getApi() {
       console.log(lon);
       console.log(lat);
     });
+
+  var weatherUrl = 'https://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lon + '&appid=' + apiKey;
+  console.log(weatherUrl);
 }
 
 fetchButton.addEventListener('click', getApi);
