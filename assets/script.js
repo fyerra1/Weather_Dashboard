@@ -23,7 +23,8 @@ function getApi() {
       console.log(lon);
       console.log(lat);
 
-      var weatherUrl = 'https://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lon + '&limit=1&appid=' + apiKey;
+      // var weatherUrl = 'https://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lon + '&limit=1&appid=' + apiKey;
+      var weatherUrl = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + lat + '&lon=' + lon + '&limit=1&appid=' + apiKey;
       console.log(weatherUrl);
 
       fetch(weatherUrl)
@@ -54,12 +55,27 @@ function renderWeather(data) {
   var tempData = data.main.temp;
   var windData = data.wind.speed;
   var humidityData = data.main.humidity;
-  var uvData = data.uvi;
+  // var uvData = data.uvi;
 
   console.log(tempData);
   console.log(windData);
   console.log(humidityData);
-  console.log(uvData);
+  // console.log(uvData);
+
+  var displayTemp = document.getElementById('temp');
+  var displayWind = document.getElementById('wind');
+  var displayHumidity = document.getElementById('humidity');
+  // var displayUv = document.getElementById('temp');
+
+  displayTemp.textContent = 'Temp: ' + tempData;
+  displayWind.textContent = 'Wind: ' + windData + 'mph';
+  displayHumidity.textContent = 'Humidity: ' + humidityData + '%';
+  // displayUv.textContent = 'UV Index: ' + uvData;
+
+  var dt = data.dt;
+  console.log(dt);
+  var unixFormat = moment.unix(dt).format("MMM Do, YYYY, hh:mm:ss");
+  console.log(unixFormat)
 }
 
 fetchButton.addEventListener('click', getApi);
