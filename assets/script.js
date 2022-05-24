@@ -26,7 +26,6 @@ function getApi() {
       console.log(name);
       renderCity(name);
 
-      // var weatherUrl = 'https://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lon + '&limit=1&appid=' + apiKey;
       var weatherUrl = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + lat + '&lon=' + lon + '&limit=1&appid=' + apiKey;
       console.log(weatherUrl);
 
@@ -54,7 +53,7 @@ function renderCurrent(data){
   console.log(data);
 
   var timeId = document.getElementById('current-day')
-  timeId.textContent = '(' + (today.format("MMM Do, YYYY")) + ')';
+  timeId.textContent = '(' + (today.format("M/D/YYYY")) + ')';
 
   var iconId = document.getElementById('weather-icon');
   var weatherIcon = data.current.weather[0].icon;
@@ -79,67 +78,34 @@ function renderCurrent(data){
   displayUv.textContent = 'UV Index: ' + uvData;
 }
 
-// var forecastCards = getElementsByClass('forecast');
 
 function renderFuture(data){
   console.log(data);
+  for (var i = 1; i < 6; i++){
+    var displayDate = document.getElementById('time' + i)
+    var dt = data.daily[0 + i].dt;
+    console.log(dt);
+    var unixFormat = moment.unix(dt).format("M/D/YYYY");
+    console.log(unixFormat)
+    displayDate.textContent = unixFormat;
 
-  for (var i = 0; i < 5; i++){
     var displayIcon1 = document.getElementById('icon' + i)
-    var futureIcon = data.daily[0 + i].weather[0].icon;
+    var futureIcon = data.daily[i].weather[0].icon;
     displayIcon1.src = 'http://openweathermap.org/img/w/' + futureIcon + '.png';
 
     var displayTemp1 = document.getElementById('temp' + i)
-    var futureTemp = data.daily[0 + i].temp.max;
+    var futureTemp = data.daily[i].temp.max;
     displayTemp1.textContent = 'Temp: ' + futureTemp;
 
     var displayWind1 = document.getElementById('wind' + i)
-    var futureWind = data.daily[0 + i].wind_speed;
+    var futureWind = data.daily[i].wind_speed;
     displayWind1.textContent = 'Wind: ' + futureWind;
 
     var displayHumidity1 = document.getElementById('humidity' + i)
-    var futureHumidity = data.daily[0 + i].humidity;
+    var futureHumidity = data.daily[i].humidity;
     displayHumidity1.textContent = 'Humidity: ' + futureHumidity;
   }
 }
-
-// function renderWeather(data) {
-//   console.log(data[0].name);
-//   var userCity = document.getElementById('city-name');
-//   userCity.textContent = data.name;
-  
-//   var timeId = document.getElementById('current-day')
-//   timeId.textContent = '(' + (today.format("MMM Do, YYYY")) + ')';
-
-//   var iconId = document.getElementById('weather-icon');
-//   var weatherIcon = data.weather[0].icon;
-//   iconId.src = 'http://openweathermap.org/img/w/' + weatherIcon + '.png';
-
-//   var tempData = data.main.temp;
-//   var windData = data.wind.speed;
-//   var humidityData = data.main.humidity;
-//   // var uvData = data.uvi;
-
-//   console.log(tempData);
-//   console.log(windData);
-//   console.log(humidityData);
-//   // console.log(uvData);
-
-//   var displayTemp = document.getElementById('temp');
-//   var displayWind = document.getElementById('wind');
-//   var displayHumidity = document.getElementById('humidity');
-//   // var displayUv = document.getElementById('temp');
-
-//   displayTemp.textContent = 'Temp: ' + tempData;
-//   displayWind.textContent = 'Wind: ' + windData + 'mph';
-//   displayHumidity.textContent = 'Humidity: ' + humidityData + '%';
-//   // displayUv.textContent = 'UV Index: ' + uvData;
-
-//   var dt = data.dt;
-//   console.log(dt);
-//   var unixFormat = moment.unix(dt).format("MMM Do, YYYY, hh:mm:ss");
-//   console.log(unixFormat)
-// }
 
 fetchButton.addEventListener('click', getApi);
 
