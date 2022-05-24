@@ -14,19 +14,27 @@
     <header>
         <h1 class="text-center"><strong>Weather Dashboard</strong></h1>
     </header>
-    <main class="d-flex">
-        <div class="d-flex flex-column col-4 col-md-3 col-lg-2 border1">
+    <main class="d-flex flex-row min-vw-100">
+        <div class="border1">
             <label for="location-search" class="h4"><strong>Search for a City:</strong></label><br>
             <input type="text" id="location-search" name="location-search"><br>
             <button type="button" id="search-btn" class="btn btn-danger mt-0">Search</button>
             <hr>
             <div id="search-history" class="d-grid text-center gap-2"></div>
         </div>
-        <div class="container flex-wrap col-8 col-md-9 col-lg-10 border1">
-            <div class="card">
-                <div class="card-body"></div>
+        <div class="d-flex border1 flex-column">
+            <div class="d-flex flex-row border1">
+                <h3 class="jumbotron" id="city-name"></h3>
+                <h3 id="current-day"></h3>
+                <div id="weather-icon"></div>
             </div>
-            <div id="five-day-forecast" class="card"></div>
+            <div id="five-day-forecast" class="card flex-row border1">
+                <h4 class="card">Future 1</h4>
+                <h4 class="card">Future 2</h4>
+                <h4 class="card">Future 3</h4>
+                <h4 class="card">Future 4</h4>
+                <h4 class="card">Future 5</h4>
+            </div>
         </div>
     </main>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment.min.js"></script>
