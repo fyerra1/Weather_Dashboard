@@ -79,8 +79,28 @@ function renderCurrent(data){
   displayUv.textContent = 'UV Index: ' + uvData;
 }
 
+// var forecastCards = getElementsByClass('forecast');
+
 function renderFuture(data){
   console.log(data);
+
+  for (var i = 0; i < 5; i++){
+    var displayIcon1 = document.getElementById('icon' + i)
+    var futureIcon = data.daily[0 + i].weather[0].icon;
+    displayIcon1.src = 'http://openweathermap.org/img/w/' + futureIcon + '.png';
+
+    var displayTemp1 = document.getElementById('temp' + i)
+    var futureTemp = data.daily[0 + i].temp.max;
+    displayTemp1.textContent = 'Temp: ' + futureTemp;
+
+    var displayWind1 = document.getElementById('wind' + i)
+    var futureWind = data.daily[0 + i].wind_speed;
+    displayWind1.textContent = 'Wind: ' + futureWind;
+
+    var displayHumidity1 = document.getElementById('humidity' + i)
+    var futureHumidity = data.daily[0 + i].humidity;
+    displayHumidity1.textContent = 'Humidity: ' + futureHumidity;
+  }
 }
 
 // function renderWeather(data) {
