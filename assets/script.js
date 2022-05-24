@@ -8,7 +8,7 @@ var today = moment();
 function getApi() {
   // fetch request gets coordinates based on city/user input
   var userInput = document.getElementById('location-search').value;
-  var requestUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + userInput + '&limit=1&appid=' + apiKey;
+  var requestUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + userInput + '&appid=' + apiKey;
   console.log(requestUrl);
   fetch(requestUrl)
     .then(function (response) {
@@ -47,9 +47,29 @@ function renderWeather(data) {
   var timeId = document.getElementById('current-day')
   timeId.textContent = '(' + (today.format("MMM Do, YYYY")) + ')';
 
-  var iconId = document.getElementById('weather-icon')
-  iconId.textContent = data.weather[0].icon;
-  console.log(data.weather[0].icon)
+  var iconId = document.getElementById('weather-icon');
+  var weatherIcon = data.weather[0].icon;
+  iconId.src = 'http://openweathermap.org/img/w/' + weatherIcon + '.png';
+
+  var tempData = data.main.temp;
+  var windData = data.wind.speed;
+  var humidityData = data.main.humidity;
+  var uvData = data.uvi;
+
+  console.log(tempData);
+  console.log(windData);
+  console.log(humidityData);
+  console.log(uvData);
 }
 
 fetchButton.addEventListener('click', getApi);
+
+
+
+// create recent search (how to save)
+  // add recent searches to an array/object
+  // local storage
+  // render
+// if saved an array, 
+
+// javascript openweather map api isplay icon
