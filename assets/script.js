@@ -77,6 +77,15 @@ function renderCurrent(data){
   displayWind.textContent = 'Wind: ' + windData + 'mph';
   displayHumidity.textContent = 'Humidity: ' + humidityData + '%';
   displayUv.textContent = 'UV Index: ' + uvData;
+
+  
+
+  if(uvData > 5){
+    displayUv.classList.add('severe')
+  }else if(uvData > 2){
+      displayUv.classList.add('moderate')
+    }else{displayUv.classList.add('favorable')}
+  
 }
 
 
