@@ -64,12 +64,12 @@ function renderCurrent(data){
   displayHumidity.textContent = 'Humidity: ' + humidityData + '%';
   displayUv.textContent = 'UV Index: ' + uvData;
   
+  // sets colorblocking to UV index based on current conditions
   if(uvData > 5){
     displayUv.classList.add('severe')
   }else if(uvData > 2){
       displayUv.classList.add('moderate')
     }else{displayUv.classList.add('favorable')}
-  
 }
 
 // renders future weather forecast
@@ -141,7 +141,8 @@ function removeHidden() {
   hiddenContainer.classList.remove('hidden');
 };
 
-searchButton.addEventListener('click', getApi);
+
+searchButton.addEventListener('click', getApi)
 
 
 

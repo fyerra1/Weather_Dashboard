@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,13 +8,12 @@
     <link rel="stylesheet" type="text/css" href="./assets/style.css">
     <title>Weather Dashboard</title>
 </head>
-
 <body>
     <header>
         <h1 class="text-center align-self-center"><strong>Weather Dashboard</strong></h1>
     </header>
-    <main class="d-flex flex-row container min-vw-100 justify-content-center">
-        <section class="p-1 d-flex flex-column align-items-center">
+    <main class="d-flex flex-row container min-vw-100 min-vh-100 justify-content-center" id="main">
+        <section class="p-1 d-flex flex-column align-items-center mt-2 pt-1">
             <div class="d-flex flex-row text-center p-2 mt-1">
             <input type="text" id="location-search" name="location-search" placeholder="City Name"><br>
             <button type="button" id="search-btn" class="btn-primary">Search</button>
@@ -25,7 +23,7 @@
             </div>
         </section>
         <section class="d-flex forecast-container flex-column hidden">
-            <section class="card d-flex flex-column m-4 p-1">
+            <section class="card d-flex flex-column m-4 p-5">
                 <section class="d-flex flex-row city-list">
                     <h3 class="jumbotron p-1" id="city-name"></h3>
                     <h3 class="p-1" id="current-day"></h3>
@@ -38,7 +36,7 @@
                     <h6 class="p-1" id="UV-Index"></h6>
                 </section>
             </section>
-            <section class="d-flex flex-row justify-content-around p-2">
+            <section class="card d-flex flex-row justify-content-around m-4 p-2">
                 <section class="card forecast city-list">
                     <h6 id="time1"></h6>
                     <img src="" id="icon1">
@@ -80,5 +78,4 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment.min.js"></script>
     <script src="./assets/script.js"></script>
 </body>
-
 </html>
