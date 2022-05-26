@@ -8,7 +8,7 @@ searchButton.addEventListener('click', getApi)
 function getApi() {
   // fetch request gets coordinates based on city/user input
   var userInput = document.getElementById('location-search').value;
-  var requestUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + userInput + '&appid=' + apiKey;
+  var requestUrl = 'https://api.openweathermap.org/geo/1.0/direct?q=' + userInput + '&appid=' + apiKey;
   fetch(requestUrl)
     .then(function (response) {
       return response.json();
@@ -24,8 +24,6 @@ function getApi() {
       cityArray.push(name);
       console.log(cityArray);
       localStorage.setItem('cities', JSON.stringify(cityArray));
-      // var storedCities = JSON.parse(localStorage.getItem('cities'));
-      // console.log(storedCities);
 
       var weatherUrl = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + lat + '&lon=' + lon + '&limit=1&units=imperial&appid=' + apiKey;
       // fetch request gets weather data based on city/user input
@@ -55,7 +53,7 @@ function renderCurrent(data){
 
   var iconId = document.getElementById('weather-icon');
   var weatherIcon = data.current.weather[0].icon;
-  iconId.src = 'http://openweathermap.org/img/w/' + weatherIcon + '.png';
+  iconId.src = 'https://openweathermap.org/img/w/' + weatherIcon + '.png';
   console.log(data);
 
   var tempData = data.current.temp;
@@ -91,7 +89,7 @@ function renderFuture(data){
 
     var displayIcon1 = document.getElementById('icon' + i)
     var futureIcon = data.daily[i].weather[0].icon;
-    displayIcon1.src = 'http://openweathermap.org/img/w/' + futureIcon + '.png';
+    displayIcon1.src = 'https://openweathermap.org/img/w/' + futureIcon + '.png';
 
     var displayTemp1 = document.getElementById('temp' + i)
     var futureTemp = data.daily[i].temp.max;
@@ -118,7 +116,7 @@ function searchHistory(city){
   cityBtn.addEventListener('click', function(e){
   var selectedCity = e.target.textContent;
 
-  var requestUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + selectedCity + '&appid=' + apiKey;
+  var requestUrl = 'https://api.openweathermap.org/geo/1.0/direct?q=' + selectedCity + '&appid=' + apiKey;
   fetch(requestUrl)
     .then(function (response) {
       return response.json();
@@ -165,7 +163,7 @@ function renderStorage (){
   var selectedCity = e.target.textContent;
   console.log(selectedCity);
 
-  var requestUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + selectedCity + '&appid=' + apiKey;
+  var requestUrl = 'https://api.openweathermap.org/geo/1.0/direct?q=' + selectedCity + '&appid=' + apiKey;
   fetch(requestUrl)
     .then(function (response) {
       return response.json();
@@ -190,10 +188,10 @@ function renderStorage (){
       })
     });
     removeHidden();
+    renderCity();
+    renderCurrent();
+    renderFuture();
 })}
-  renderCity();
-  renderCurrent();
-  renderFuture();
 }
 
 renderStorage();
