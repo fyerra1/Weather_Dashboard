@@ -12,69 +12,70 @@
 
 <body>
     <header>
-        <h1 class="text-center"><strong>Weather Dashboard</strong></h1>
+        <h1 class="text-center align-self-center"><strong>Weather Dashboard</strong></h1>
     </header>
-    <main class="d-flex flex-row container min-vw-100">
-        <div class="">
-            <label for="location-search" class="h4"><strong>Search for a City:</strong></label><br>
-            <input type="text" id="location-search" name="location-search"><br>
-            <button type="button" id="search-btn" class="btn btn-danger mt-0">Search</button>
+    <main class="d-flex flex-row container min-vw-100 justify-content-center">
+        <section class="p-1 d-flex flex-column align-items-center">
+            <div class="d-flex flex-row text-center p-2 mt-1">
+            <input type="text" id="location-search" name="location-search" placeholder="City Name"><br>
+            <button type="button" id="search-btn" class="btn-primary">Search</button>
+            </div>
             <hr>
-            <div id="search-list" class="d-flex flex-column text-center gap-2">
+            <div id="search-list" class="card d-flex flex-column text-center p-2">
             </div>
-        </div>
-        <div class="d-flex forecast-container flex-column">
-            <div class="d-flex flex-column">
-                <div class="d-flex flex-row">
-                    <h3 class="jumbotron" id="city-name"></h3>
-                    <h3 id="current-day"></h3>
-                    <img src="" id="weather-icon">
-                </div>
-                <div>
-                    <div id="temp"></div>
-                    <div id="wind"></div>
-                    <div id="humidity"></div>
-                    <div id="UV-Index"></div>
-                </div>
-            </div>
-            <div class="card d-flex flex-row justify-content-around forecast-container p-3">
-                <div class="card forecast">
-                    <div id="time1"></div>
+        </section>
+        <section class="d-flex forecast-container flex-column hidden">
+            <section class="card d-flex flex-column m-4 p-1">
+                <section class="d-flex flex-row city-list">
+                    <h3 class="jumbotron p-1" id="city-name"></h3>
+                    <h3 class="p-1" id="current-day"></h3>
+                    <img class="p-1" src="" id="weather-icon">
+                </section>
+                <section class="city-list">
+                    <h6 class="p-1" id="temp"></h6>
+                    <h6 class="p-1" id="wind"></h6>
+                    <h6 class="p-1" id="humidity"></h6>
+                    <h6 class="p-1" id="UV-Index"></h6>
+                </section>
+            </section>
+            <section class="d-flex flex-row justify-content-around p-2">
+                <section class="card forecast city-list">
+                    <h6 id="time1"></h6>
                     <img src="" id="icon1">
-                    <div id="temp1"></div>
-                    <div id="wind1"></div>
-                    <div id="humidity1"></div>
-                </div>
-                <div class="card forecast">
-                    <div id="time2"></div>
+                    <h6 id="temp1"></h6>
+                    <h6 id="wind1"></h6>
+                    <h6 id="humidity1"></h6>
+                </section>
+                <section class="card forecast city-list">
+                    <h6 id="time2"></h6>
                     <img src="" id="icon2">
-                    <div id="temp2"></div>
-                    <div id="wind2"></div>
-                    <div id="humidity2"></div>
-                </div>
-                <div class="card forecast">
-                    <div id="time3"></div>
+                    <h6 id="temp2"></h6>
+                    <h6 id="wind2"></h6>
+                    <h6 id="humidity2"></h6>
+                </section>
+                <section class="card forecast city-list">
+                    <h6 id="time3"></h6>
                     <img src="" id="icon3">
-                    <div id="temp3"></div>
-                    <div id="wind3"></div>
-                    <div id="humidity3"></div>
-                </div>
-                <div class="card forecast">
-                    <div id="time4"></div>
+                    <h6 id="temp3"></h6>
+                    <h6 id="wind3"></h6>
+                    <h6 id="humidity3"></h6>
+                </section>
+                <section class="card forecast city-list">
+                    <h6 id="time4"></h6>
                     <img src="" id="icon4">
-                    <div id="temp4"></div>
-                    <div id="wind4"></div>
-                    <div id="humidity4"></div>
-                </div>
-                <div class="card forecast">
-                    <div id="time5"></div>
+                    <h6 id="temp4"></h6>
+                    <h6 id="wind4"></h6>
+                    <h6 id="humidity4"></h6>
+                </section>
+                <section class="card forecast city-list">
+                    <h6 id="time5"></h6>
                     <img src="" id="icon5">
-                    <div id="temp5"></div>
-                    <div id="wind5"></div>
-                    <div id="humidity5"></div>
-                </div>
-            </div>
-        </div>    
+                    <h6 id="temp5"></h6>
+                    <h6 id="wind5"></h6>
+                    <h6 id="humidity5"></h6>
+                </section>
+            </section>
+        </section>    
     </main>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment.min.js"></script>
     <script src="./assets/script.js"></script>

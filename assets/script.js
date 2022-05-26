@@ -1,58 +1,48 @@
 var apiKey = "60febae823b8eccb276fbf44244f8a28";
-
-var tableBody = document.getElementById('five-day-forecast');
-var fetchButton = document.getElementById('search-btn');
-
+var searchButton = document.getElementById('search-btn');
 var today = moment();
 
 function getApi() {
   // fetch request gets coordinates based on city/user input
   var userInput = document.getElementById('location-search').value;
   var requestUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + userInput + '&appid=' + apiKey;
-  console.log(requestUrl);
   fetch(requestUrl)
     .then(function (response) {
-      console.log(response);
       return response.json();
     })
     .then(function (data) {
-      console.log(data)
 
       var lat = data[0].lat
       var lon = data[0].lon
       var name = data[0].name
-      console.log(lon);
-      console.log(lat);
-      console.log(name);
+    
       renderCity(name);
       searchHistory(name);
 
-      var weatherUrl = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + lat + '&lon=' + lon + '&limit=1&appid=' + apiKey;
-      console.log(weatherUrl);
-
+      var weatherUrl = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + lat + '&lon=' + lon + '&limit=1&units=imperial&appid=' + apiKey;
+      // fetch request gets weather data based on city/user input
       fetch(weatherUrl)
       .then(function (weatherResponse){
-        console.log(weatherResponse);
         return weatherResponse.json();
       })
       .then(function(weatherData){
-        console.log(weatherData);
 
         renderCurrent(weatherData);
         renderFuture(weatherData);
       })
     });
+
+    removeHidden();
 }
 
+// renders city name to current weather section
 function renderCity(data){
-  console.log(data);
   var userCity = document.getElementById('city-name');
   userCity.textContent = data;
 }
 
+// renders current weather data
 function renderCurrent(data){
-  console.log(data);
-
   var timeId = document.getElementById('current-day')
   timeId.textContent = '(' + (today.format("M/D/YYYY")) + ')';
 
@@ -64,22 +54,16 @@ function renderCurrent(data){
   var windData = data.current.wind_speed;
   var humidityData = data.current.humidity;
   var uvData = data.current.uvi;
-  console.log(tempData);
-  console.log(windData);
-  console.log(humidityData);
-  console.log(uvData);
 
   var displayTemp = document.getElementById('temp');
   var displayWind = document.getElementById('wind');
   var displayHumidity = document.getElementById('humidity');
   var displayUv = document.getElementById('UV-Index');
-  displayTemp.textContent = 'Temp: ' + tempData;
-  displayWind.textContent = 'Wind: ' + windData + 'mph';
+  displayTemp.textContent = 'Temp: ' + tempData + ' F';
+  displayWind.textContent = 'Wind: ' + windData + ' MPH';
   displayHumidity.textContent = 'Humidity: ' + humidityData + '%';
   displayUv.textContent = 'UV Index: ' + uvData;
-
   
-
   if(uvData > 5){
     displayUv.classList.add('severe')
   }else if(uvData > 2){
@@ -88,15 +72,12 @@ function renderCurrent(data){
   
 }
 
-
+// renders future weather forecast
 function renderFuture(data){
-  console.log(data);
   for (var i = 1; i < 6; i++){
     var displayDate = document.getElementById('time' + i)
     var dt = data.daily[0 + i].dt;
-    console.log(dt);
     var unixFormat = moment.unix(dt).format("M/D/YYYY");
-    console.log(unixFormat)
     displayDate.textContent = unixFormat;
 
     var displayIcon1 = document.getElementById('icon' + i)
@@ -105,57 +86,48 @@ function renderFuture(data){
 
     var displayTemp1 = document.getElementById('temp' + i)
     var futureTemp = data.daily[i].temp.max;
-    displayTemp1.textContent = 'Temp: ' + futureTemp;
+    displayTemp1.textContent = 'Temp: ' + futureTemp + ' F';
 
     var displayWind1 = document.getElementById('wind' + i)
     var futureWind = data.daily[i].wind_speed;
-    displayWind1.textContent = 'Wind: ' + futureWind;
+    displayWind1.textContent = 'Wind: ' + futureWind + ' MPH';
 
     var displayHumidity1 = document.getElementById('humidity' + i)
     var futureHumidity = data.daily[i].humidity;
-    displayHumidity1.textContent = 'Humidity: ' + futureHumidity;
+    displayHumidity1.textContent = 'Humidity: ' + futureHumidity + '%';
   }
 }
 
+// renders recent searches
 function searchHistory(city){
-  console.log(city);
   var cityBtn = document.createElement('button');
   var cityList = document.getElementById('search-list');
   cityBtn.textContent = city;
+  cityBtn.classList.add('btn-primary', 'btn', 'city-btn', 'mt-1')
   cityList.append(cityBtn);
 
   cityBtn.addEventListener('click', function(e){
   var selectedCity = e.target.textContent;
-  console.log(selectedCity);
 
   var requestUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + selectedCity + '&appid=' + apiKey;
-  console.log(requestUrl);
   fetch(requestUrl)
     .then(function (response) {
-      console.log(response);
       return response.json();
     })
     .then(function (data) {
-      console.log(data)
 
       var lat = data[0].lat
       var lon = data[0].lon
       var name = data[0].name
-      console.log(lon);
-      console.log(lat);
-      console.log(name);
       renderCity(name);
 
       var weatherUrl = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + lat + '&lon=' + lon + '&limit=1&appid=' + apiKey;
-      console.log(weatherUrl);
 
       fetch(weatherUrl)
       .then(function (weatherResponse){
-        console.log(weatherResponse);
         return weatherResponse.json();
       })
       .then(function(weatherData){
-        console.log(weatherData);
 
         renderCurrent(weatherData);
         renderFuture(weatherData);
@@ -164,14 +136,12 @@ function searchHistory(city){
 })
 }
 
-fetchButton.addEventListener('click', getApi);
+function removeHidden() {
+  var hiddenContainer = document.querySelector('.forecast-container')
+  hiddenContainer.classList.remove('hidden');
+};
+
+searchButton.addEventListener('click', getApi);
 
 
 
-// create recent search (how to save)
-  // add recent searches to an array/object
-  // local storage
-  // render
-// if saved an array, 
-
-// javascript openweather map api isplay icon
