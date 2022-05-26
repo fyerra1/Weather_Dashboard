@@ -51,11 +51,9 @@ function renderCurrent(data){
   var timeId = document.getElementById('current-day')
   timeId.textContent = '(' + (today.format("M/D/YYYY")) + ')';
 
-  console.log(data.current);
   var iconId = document.getElementById('weather-icon');
   var weatherIcon = data.current.weather[0].icon;
   iconId.src = 'https://openweathermap.org/img/w/' + weatherIcon + '.png';
-  console.log(data);
 
   var tempData = data.current.temp;
   var windData = data.current.wind_speed;
