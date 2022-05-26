@@ -3,6 +3,7 @@ var searchButton = document.getElementById('search-btn');
 var today = moment();
 var cityArray = [];
 
+searchButton.addEventListener('click', getApi)
 
 function getApi() {
   // fetch request gets coordinates based on city/user input
@@ -40,60 +41,11 @@ function getApi() {
     });
 
     removeHidden();
-    // renderStorage();
-}
-
-function renderStorage (){
-  var storedCities = JSON.parse(localStorage.getItem('cities'));
-  console.log(storedCities);
-  for (var i = 0; i < storedCities.length; i++){
-  var cityBtn = document.createElement('button');
-  var cityList = document.getElementById('search-list');
-  cityBtn.textContent = storedCities[i];
-  cityBtn.classList.add('btn-primary', 'btn', 'city-btn', 'mt-1')
-  cityList.append(cityBtn);
-  // cityArray.push(city);
-  // console.log(cityArray);
-
-  cityBtn.addEventListener('click', function(e){
-  var selectedCity = e.target.textContent;
-  console.log(selectedCity);
-
-  var requestUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + selectedCity + '&appid=' + apiKey;
-  fetch(requestUrl)
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (data) {
-
-      var lat = data[0].lat
-      var lon = data[0].lon
-      var name = data[0].name
-      renderCity(name);
-
-      var weatherUrl = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + lat + '&lon=' + lon + '&limit=1&units=imperial&appid=' + apiKey;
-
-      fetch(weatherUrl)
-      .then(function (weatherResponse){
-        return weatherResponse.json();
-      })
-      .then(function(weatherData){
-
-        renderCurrent(weatherData);
-        renderFuture(weatherData);
-      })
-    });
-    removeHidden();
-})}
-  renderCity();
-  renderCurrent();
-  renderFuture();
 }
 
 function renderCity(data){
   var userCity = document.getElementById('city-name');
   userCity.textContent = data;
-  // userCity.textContent = storedCities[0];
 }
 
 // renders current weather data
@@ -130,6 +82,7 @@ function renderCurrent(data){
 
 // renders future weather forecast
 function renderFuture(data){
+
   for (var i = 1; i < 6; i++){
     var displayDate = document.getElementById('time' + i)
     var dt = data.daily[0 + i].dt;
@@ -154,15 +107,13 @@ function renderFuture(data){
   }
 }
 
-// renders recent searches
+// temporarily renders recent searches
 function searchHistory(city){
   var cityBtn = document.createElement('button');
   var cityList = document.getElementById('search-list');
   cityBtn.textContent = city;
   cityBtn.classList.add('btn-primary', 'btn', 'city-btn', 'mt-1')
   cityList.append(cityBtn);
-  // cityArray.push(city);
-  // console.log(cityArray);
 
   cityBtn.addEventListener('click', function(e){
   var selectedCity = e.target.textContent;
@@ -199,9 +150,52 @@ function removeHidden() {
   hiddenContainer.classList.remove('hidden');
 };
 
+// renders stored cities
+function renderStorage (){
+  var storedCities = JSON.parse(localStorage.getItem('cities'));
+  console.log(storedCities);
+  for (var i = 0; i < storedCities.length; i++){
+  var cityBtn = document.createElement('button');
+  var cityList = document.getElementById('search-list');
+  cityBtn.textContent = storedCities[i];
+  cityBtn.classList.add('btn-primary', 'btn', 'city-btn', 'mt-1')
+  cityList.append(cityBtn);
 
-searchButton.addEventListener('click', getApi)
-console.log(cityArray);
+  cityBtn.addEventListener('click', function(e){
+  var selectedCity = e.target.textContent;
+  console.log(selectedCity);
+
+  var requestUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + selectedCity + '&appid=' + apiKey;
+  fetch(requestUrl)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+
+      var lat = data[0].lat
+      var lon = data[0].lon
+      var name = data[0].name
+      renderCity(name);
+
+      var weatherUrl = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + lat + '&lon=' + lon + '&limit=1&units=imperial&appid=' + apiKey;
+
+      fetch(weatherUrl)
+      .then(function (weatherResponse){
+        return weatherResponse.json();
+      })
+      .then(function(weatherData){
+
+        renderCurrent(weatherData);
+        renderFuture(weatherData);
+      })
+    });
+    removeHidden();
+})}
+  renderCity();
+  renderCurrent();
+  renderFuture();
+}
+
 renderStorage();
 
 
