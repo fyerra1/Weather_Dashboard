@@ -1,6 +1,8 @@
 var apiKey = "60febae823b8eccb276fbf44244f8a28";
 var searchButton = document.getElementById('search-btn');
 var today = moment();
+var cityArray = [];
+
 
 function getApi() {
   // fetch request gets coordinates based on city/user input
@@ -15,9 +17,14 @@ function getApi() {
       var lat = data[0].lat
       var lon = data[0].lon
       var name = data[0].name
-    
+      
       renderCity(name);
       searchHistory(name);
+      cityArray.push(name);
+      console.log(cityArray);
+      localStorage.setItem('cities', JSON.stringify(cityArray));
+      // var storedCities = JSON.parse(localStorage.getItem('cities'));
+      // console.log(storedCities);
 
       var weatherUrl = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + lat + '&lon=' + lon + '&limit=1&units=imperial&appid=' + apiKey;
       // fetch request gets weather data based on city/user input
@@ -33,12 +40,60 @@ function getApi() {
     });
 
     removeHidden();
+    // renderStorage();
 }
 
-// renders city name to current weather section
+function renderStorage (){
+  var storedCities = JSON.parse(localStorage.getItem('cities'));
+  console.log(storedCities);
+  for (var i = 0; i < storedCities.length; i++){
+  var cityBtn = document.createElement('button');
+  var cityList = document.getElementById('search-list');
+  cityBtn.textContent = storedCities[i];
+  cityBtn.classList.add('btn-primary', 'btn', 'city-btn', 'mt-1')
+  cityList.append(cityBtn);
+  // cityArray.push(city);
+  // console.log(cityArray);
+
+  cityBtn.addEventListener('click', function(e){
+  var selectedCity = e.target.textContent;
+  console.log(selectedCity);
+
+  var requestUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + selectedCity + '&appid=' + apiKey;
+  fetch(requestUrl)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+
+      var lat = data[0].lat
+      var lon = data[0].lon
+      var name = data[0].name
+      renderCity(name);
+
+      var weatherUrl = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + lat + '&lon=' + lon + '&limit=1&units=imperial&appid=' + apiKey;
+
+      fetch(weatherUrl)
+      .then(function (weatherResponse){
+        return weatherResponse.json();
+      })
+      .then(function(weatherData){
+
+        renderCurrent(weatherData);
+        renderFuture(weatherData);
+      })
+    });
+    removeHidden();
+})}
+  renderCity();
+  renderCurrent();
+  renderFuture();
+}
+
 function renderCity(data){
   var userCity = document.getElementById('city-name');
   userCity.textContent = data;
+  // userCity.textContent = storedCities[0];
 }
 
 // renders current weather data
@@ -49,6 +104,7 @@ function renderCurrent(data){
   var iconId = document.getElementById('weather-icon');
   var weatherIcon = data.current.weather[0].icon;
   iconId.src = 'http://openweathermap.org/img/w/' + weatherIcon + '.png';
+  console.log(data);
 
   var tempData = data.current.temp;
   var windData = data.current.wind_speed;
@@ -105,6 +161,8 @@ function searchHistory(city){
   cityBtn.textContent = city;
   cityBtn.classList.add('btn-primary', 'btn', 'city-btn', 'mt-1')
   cityList.append(cityBtn);
+  // cityArray.push(city);
+  // console.log(cityArray);
 
   cityBtn.addEventListener('click', function(e){
   var selectedCity = e.target.textContent;
@@ -121,7 +179,7 @@ function searchHistory(city){
       var name = data[0].name
       renderCity(name);
 
-      var weatherUrl = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + lat + '&lon=' + lon + '&limit=1&appid=' + apiKey;
+      var weatherUrl = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + lat + '&lon=' + lon + '&limit=1&units=imperial&appid=' + apiKey;
 
       fetch(weatherUrl)
       .then(function (weatherResponse){
@@ -143,6 +201,8 @@ function removeHidden() {
 
 
 searchButton.addEventListener('click', getApi)
+console.log(cityArray);
+renderStorage();
 
 
 
