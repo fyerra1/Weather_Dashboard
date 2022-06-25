@@ -7,4 +7,4 @@ Screenshots of web application:
 ![screencapture-file-Users-frankyerra-Desktop-Coding-HWs-WK6-Javascript-Weather-Dashboard-index-html-2022-05-26-14_00_24](https://user-images.githubusercontent.com/101071513/170589125-b1906122-8b7f-47ae-92e3-00030be97b19.png)
 
 Link to live page:
-[https://fyerra1.github.io/Weather_Dashboard/](https://fyerra1.github.io/Weather_Dashboard-SERVER_SIDE_API/)
+[[https://fyerra1.github.io/Weather_Dashboard/](https://fyerra1.github.io/Weather_Dashboard-SERVER_SIDE_API/)](https://fyerra1.github.io/weather_dashboard-SERVER_SIDE_API/)
